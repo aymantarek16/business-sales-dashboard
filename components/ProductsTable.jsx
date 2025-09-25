@@ -1,0 +1,237 @@
+"use client";
+
+import React, { useState } from "react";
+import productData from "../public/data/data.json";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Edit, Trash2, Check, X } from "lucide-react";
+import Image from "next/image";
+
+const ProductsTable = () => {
+  const [products, setProducts] = useState(productData.products);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [editingRow, setEditingRow] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null); // id of the row showing popover
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = productData.products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query)
+    );
+    setProducts(filtered);
+  };
+
+  const handleDelete = (id) => {
+    setConfirmDelete(id); // show popover for this row
+  };
+
+  const confirmDeleteRow = (id) => {
+    setProducts(products.filter((p) => p.id !== id));
+    setConfirmDelete(null);
+  };
+
+  const handleEdit = (id) => setEditingRow(id);
+  const handleSaveClick = () => setEditingRow(null);
+
+  const handleChange = (id, field, value) => {
+    if (!/^\d*\.?\d+$/.test(value)) return;
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === id ? { ...product, [field]: Number(value) } : product
+      )
+    );
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+      className="w-[76vw] bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-8 border border-[#1f1f1f] mx-auto mb-8 relative"
+    >
+      {/* Header + Search */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 md:gap-0">
+        <h2 className="text-lg md:text-xl font-semibold text-gray-100 text-center md:text-left">
+          Products List
+        </h2>
+        <div className="relative w-full md:w-64">
+          <input
+            type="text"
+            placeholder="Search Products..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="bg-[#2f2f2f] text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-3 w-full
+            focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-200 text-sm md:text-base"
+          />
+          <Search
+            className="absolute left-3 top-3 md:top-3.5 text-gray-400"
+            size={18}
+          />
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto w-[73vw]">
+        <table className="min-w-full table-auto divide-y divide-gray-700">
+          <thead className="bg-[#2a2a2a]">
+            <tr >
+              {[
+                "ID",
+                "Name",
+                "Category",
+                "Price",
+                "Stock",
+                "Sales",
+                "Actions",
+              ].map((header) => (
+                <th
+                  key={header}
+                  className="px-4 py-3 text-left text-sm md:text-base font-medium text-gray-400 uppercase tracking-wider"
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-700">
+            {products.map((product) => (
+              <motion.tr
+                key={product.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="hover:bg-gray-800 relative"
+              >
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                  {product.id}
+                </td>
+                <td className="px-2 py-3 mr-7 text-sm md:text-base text-gray-100 flex items-center relative top-1.5 gap-2">
+                  <Image
+                    src={product.image || "/placeholder.png"}
+                    alt={product.name}
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  {product.name}
+                </td>
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                  {product.category}
+                </td>
+
+                {/* Editable Fields */}
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                  {editingRow === product.id ? (
+                    <input
+                      type="text"
+                      value={product.price}
+                      onChange={(e) =>
+                        handleChange(product.id, "price", e.target.value)
+                      }
+                      className="w-24 md:w-28 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                    />
+                  ) : (
+                    `$${product.price}`
+                  )}
+                </td>
+
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                  {editingRow === product.id ? (
+                    <input
+                      type="text"
+                      value={product.stock}
+                      onChange={(e) =>
+                        handleChange(product.id, "stock", e.target.value)
+                      }
+                      className="w-20 md:w-24 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                    />
+                  ) : (
+                    product.stock
+                  )}
+                </td>
+
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                  {editingRow === product.id ? (
+                    <input
+                      type="text"
+                      value={product.sales || 0}
+                      onChange={(e) =>
+                        handleChange(product.id, "sales", e.target.value)
+                      }
+                      className="w-20 md:w-24 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                    />
+                  ) : (
+                    product.sales || 0
+                  )}
+                </td>
+
+                {/* Actions */}
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100 flex gap-2 md:gap-3 relative">
+                  {editingRow === product.id ? (
+                    <button
+                      onClick={handleSaveClick}
+                      className="flex items-center gap-1 md:gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 md:px-5 md:py-2 rounded cursor-pointer text-sm md:text-base"
+                    >
+                      <Check size={16} /> Save
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => handleEdit(product.id)}
+                        className="flex items-center gap-1 md:gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 md:px-5 md:py-2 rounded cursor-pointer text-sm md:text-base"
+                      >
+                        <Edit size={16} /> Edit
+                      </button>
+                      <div className="relative">
+                        <button
+                          onClick={() => handleDelete(product.id)}
+                          className="flex items-center gap-1 md:gap-2 bg-red-600 hover:bg-red-500 text-white px-4 py-2 md:px-5 md:py-2 rounded cursor-pointer text-sm md:text-base"
+                        >
+                          <Trash2 size={16} /> Delete
+                        </button>
+
+                        {/* Popover */}
+                        <AnimatePresence>
+                          {confirmDelete === product.id && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                              animate={{ opacity: 1, y: -15, scale: 1 }}
+                              exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute left-1/2 -translate-x-1/2 -translate-y-3/2 bg-gray-800 border border-gray-700 p-3 rounded shadow-lg flex items-center gap-2 z-20"
+                            >
+                              <span className="text-gray-100 text-base">
+                                Sure?
+                              </span>
+                              <button
+                                onClick={() => confirmDeleteRow(product.id)}
+                                className="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded text-sm"
+                              >
+                                Yes
+                              </button>
+                              <button
+                                onClick={() => setConfirmDelete(null)}
+                                className="cursor-pointer bg-gray-600 hover:bg-gray-500 text-white px-2 py-1 rounded text-sm"
+                              >
+                                Cancel
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </>
+                  )}
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
+  );
+};
+
+export default ProductsTable;
