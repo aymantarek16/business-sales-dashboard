@@ -55,11 +55,11 @@ const UsersTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.5 }}
-      className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 sm:p-6 border border-gray-700"
+      className="bg-gradient-to-br from-[#1a0b2e] via-[#12081f] to-[#1a0b2e] shadow-xl rounded-2xl p-6 border border-violet-900/40"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 sm:gap-0">
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-100 text-center sm:text-left">
+        <h2 className="text-lg sm:text-xl font-semibold text-violet-200 text-center sm:text-left">
           Clients
         </h2>
         <div className="relative w-full sm:w-auto">
@@ -68,22 +68,22 @@ const UsersTable = () => {
             placeholder="Search Clients"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-[#2f2f2f] text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-200"
+            className="bg-[#241034] text-white placeholder-gray-400 border border-violet-800/50 rounded-lg pl-10 pr-4 py-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-violet-600 transition duration-200"
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
         </div>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-700">
-          <thead className="bg-[#2a2a2a]">
+      <div className="overflow-x-auto rounded-lg border border-violet-900/30">
+        <table className="min-w-full divide-y divide-violet-900/40">
+          <thead className="bg-[#2b1645]/60">
             <tr>
               {["Name", "Email", "Phone Numbers", "Country", "Actions"].map(
                 (header) => (
                   <th
                     key={header}
-                    className="px-3 sm:px-6 py-3 text-left text-sm font-medium text-gray-400 uppercase tracking-wider"
+                    className="px-3 sm:px-6 py-3 text-left text-sm font-medium text-violet-300 uppercase tracking-wider"
                   >
                     {header}
                   </th>
@@ -91,14 +91,14 @@ const UsersTable = () => {
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700">
+          <tbody className="divide-y divide-violet-900/30">
             {filteredClients.map((client) => (
               <motion.tr
                 key={client.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
-                className="hover:bg-gray-800 relative"
+                className="hover:bg-violet-950/30 transition-colors"
               >
                 {/* Name + Avatar */}
                 <td className="px-6 py-4 whitespace-nowrap flex items-center gap-3">
@@ -109,7 +109,9 @@ const UsersTable = () => {
                     height={40}
                     className="w-10 h-10 rounded-full"
                   />
-                  <span className="text-gray-100">{client.name}</span>
+                  <span className="text-violet-100 font-medium">
+                    {client.name}
+                  </span>
                 </td>
 
                 {/* Email */}
@@ -121,7 +123,7 @@ const UsersTable = () => {
                       onChange={(e) =>
                         handleChange(client.id, "email", e.target.value)
                       }
-                      className="bg-gray-700 text-white rounded px-2 py-2"
+                      className="bg-[#241034] border border-violet-800/50 text-white rounded px-2 py-2"
                     />
                   ) : (
                     client.email
@@ -137,7 +139,7 @@ const UsersTable = () => {
                       onChange={(e) =>
                         handleChange(client.id, "phoneNumber", e.target.value)
                       }
-                      className="bg-gray-700 text-white rounded px-2 py-2"
+                      className="bg-[#241034] border border-violet-800/50 text-white rounded px-2 py-2"
                     />
                   ) : (
                     client.phoneNumber
@@ -153,7 +155,7 @@ const UsersTable = () => {
                       onChange={(e) =>
                         handleChange(client.id, "country", e.target.value)
                       }
-                      className="bg-gray-700 text-white rounded px-2 py-2"
+                      className="bg-[#241034] border border-violet-800/50 text-white rounded px-2 py-2"
                     />
                   ) : (
                     client.country
@@ -165,7 +167,7 @@ const UsersTable = () => {
                   {editingRow === client.id ? (
                     <button
                       onClick={handleSave}
-                      className="cursor-pointer flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm relative bottom-0.5"
+                      className="cursor-pointer flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm"
                     >
                       <Check size={16} /> Save
                     </button>
@@ -173,7 +175,7 @@ const UsersTable = () => {
                     <>
                       <button
                         onClick={() => handleEdit(client.id)}
-                        className="cursor-pointer flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded text-sm"
+                        className="cursor-pointer flex items-center gap-2 bg-violet-700 hover:bg-violet-600 text-white px-4 py-2 rounded text-sm"
                       >
                         <Edit size={16} /> Edit
                       </button>
@@ -194,9 +196,9 @@ const UsersTable = () => {
                               animate={{ opacity: 1, y: -12, scale: 1 }}
                               exit={{ opacity: 0, y: -8, scale: 0.95 }}
                               transition={{ duration: 0.15 }}
-                              className="absolute left-1/2 -translate-x-1/2 -translate-y-3/2 bg-gray-800 border border-gray-700 p-3 rounded shadow-lg flex items-center gap-2 z-20"
+                              className="absolute left-1/2 -translate-x-1/2 -translate-y-3/2 bg-[#1e0f2f] border border-violet-800/50 p-3 rounded shadow-lg flex items-center gap-2 z-20"
                             >
-                              <span className="text-gray-100 text-base">
+                              <span className="text-violet-100 text-base">
                                 Sure?
                               </span>
                               <button

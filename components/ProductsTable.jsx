@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import productData from "../public/data/data.json";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Edit, Trash2, Check, X } from "lucide-react";
+import { Search, Edit, Trash2, Check } from "lucide-react";
 import Image from "next/image";
 
 const ProductsTable = () => {
@@ -46,7 +46,8 @@ const ProductsTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.5 }}
-      className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-8 border border-[#1f1f1f] mx-auto mb-8 relative w-full"
+      className="bg-gradient-to-br from-[#1b152a] to-[#14101f] 
+      shadow-lg rounded-2xl p-4 md:p-8 border border-[#2a2340] mx-auto mb-8 relative w-full"
     >
       {/* Header + Search */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 md:gap-0 w-full">
@@ -59,8 +60,8 @@ const ProductsTable = () => {
             placeholder="Search Products..."
             value={searchQuery}
             onChange={handleSearch}
-            className="bg-[#2f2f2f] text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-3 w-full
-            focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-200 text-sm md:text-base"
+            className="bg-[#2a2540] text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-3 w-full
+            focus:outline-none focus:ring-2 focus:ring-violet-500 transition duration-200 text-sm md:text-base"
           />
           <Search
             className="absolute left-3 top-3 md:top-3.5 text-gray-400"
@@ -71,8 +72,8 @@ const ProductsTable = () => {
 
       {/* Table */}
       <div className="overflow-x-auto w-full">
-        <table className="min-w-full table-auto divide-y divide-gray-700">
-          <thead className="bg-[#2a2a2a]">
+        <table className="min-w-full table-auto divide-y divide-[#2a2340]">
+          <thead className="bg-[#1e1b2e]">
             <tr>
               {[
                 "ID",
@@ -93,19 +94,19 @@ const ProductsTable = () => {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-700">
+          <tbody className="divide-y divide-[#2a2340]">
             {products.map((product) => (
               <motion.tr
                 key={product.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
-                className="hover:bg-gray-800 relative"
+                className="hover:bg-[#1e1b2e] relative"
               >
-                <td className="px-4 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
+                <td className="px-4 py-3 text-xs md:text-base text-gray-200 whitespace-nowrap">
                   {product.id}
                 </td>
-                <td className="px-2 py-3 text-xs md:text-base relative top-1 text-gray-100 flex items-center gap-2 whitespace-nowrap">
+                <td className="px-2 py-3 text-xs md:text-base relative top-1 text-gray-200 flex items-center gap-2 whitespace-nowrap">
                   <Image
                     src={product.image || "/placeholder.png"}
                     alt={product.name}
@@ -115,18 +116,18 @@ const ProductsTable = () => {
                   />
                   <span
                     className="max-w-[120px] md:max-w-xs lg:max-w-sm truncate"
-                    title={product.name} 
+                    title={product.name}
                   >
                     {product.name}
                   </span>
                 </td>
 
-                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
+                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-200 whitespace-nowrap">
                   {product.category}
                 </td>
 
                 {/* Editable Fields */}
-                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
+                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-200 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -134,14 +135,14 @@ const ProductsTable = () => {
                       onChange={(e) =>
                         handleChange(product.id, "price", e.target.value)
                       }
-                      className="w-24 md:w-28 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                      className="w-24 md:w-28 bg-[#2a2540] text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
                     />
                   ) : (
                     `$${product.price}`
                   )}
                 </td>
 
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100 whitespace-nowrap">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-200 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -149,14 +150,14 @@ const ProductsTable = () => {
                       onChange={(e) =>
                         handleChange(product.id, "stock", e.target.value)
                       }
-                      className="w-20 md:w-24 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                      className="w-20 md:w-24 bg-[#2a2540] text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
                     />
                   ) : (
                     product.stock
                   )}
                 </td>
 
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100 whitespace-nowrap">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-200 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -164,7 +165,7 @@ const ProductsTable = () => {
                       onChange={(e) =>
                         handleChange(product.id, "sales", e.target.value)
                       }
-                      className="w-20 md:w-24 bg-gray-700 text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
+                      className="w-20 md:w-24 bg-[#2a2540] text-white rounded px-2 py-1 md:py-2 text-sm md:text-base"
                     />
                   ) : (
                     product.sales || 0
@@ -172,7 +173,7 @@ const ProductsTable = () => {
                 </td>
 
                 {/* Actions */}
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100 flex gap-2 md:gap-3 relative whitespace-nowrap">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-200 flex gap-2 md:gap-3 relative whitespace-nowrap">
                   {editingRow === product.id ? (
                     <button
                       onClick={handleSaveClick}
@@ -204,9 +205,9 @@ const ProductsTable = () => {
                               animate={{ opacity: 1, y: -15, scale: 1 }}
                               exit={{ opacity: 0, y: -10, scale: 0.9 }}
                               transition={{ duration: 0.15 }}
-                              className="absolute left-1/2 -translate-x-1/2 -translate-y-3/2 bg-gray-800 border border-gray-700 p-3 rounded shadow-lg flex items-center gap-2 z-20"
+                              className="absolute left-1/2 -translate-x-1/2 -translate-y-3/2 bg-[#1e1b2e] border border-[#2a2340] p-3 rounded shadow-lg flex items-center gap-2 z-20"
                             >
-                              <span className="text-gray-100 text-base">
+                              <span className="text-gray-200 text-base">
                                 Sure?
                               </span>
                               <button

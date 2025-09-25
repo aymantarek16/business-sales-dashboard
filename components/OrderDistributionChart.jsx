@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Pie, Cell, Legend, PieChart, ResponsiveContainer, Tooltip } from "recharts";
@@ -17,17 +18,21 @@ const OrderDistributionChart = () => {
 
   return (
     <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="bg-gradient-to-br from-[#1b152a] to-[#14101f]
+                 shadow-lg border border-[#2a2340]
+                 rounded-2xl p-5 cursor-pointer
+                 hover:shadow-[0_0_25px_-5px_rgba(139,92,246,0.6)]
+                 backdrop-blur-md"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
-      className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl
-      p-4 md:p-6 border border-[#1f1f1f] mx-2 md:mx-0"
     >
       <h2 className="text-base md:text-xl font-semibold text-gray-100 mb-4 text-center md:text-left">
         Order Status Distribution
       </h2>
 
-      <div className="w-full h-64 md:h-80 overflow-hidden">
+      <div className="w-full h-64 md:h-80 overflow-hidden rounded-xl">
         <ResponsiveContainer>
           <PieChart>
             <Pie
@@ -35,18 +40,15 @@ const OrderDistributionChart = () => {
               cx="50%"
               cy="50%"
               outerRadius={70}
-              dataKey="value"      // تم تعديلها لتتناسب مع JSON
-              nameKey="name"       // تم تعديلها لتتناسب مع JSON
+              dataKey="value"
+              nameKey="name"
               label={({ name, percent }) =>
                 `${name}: ${(percent * 100).toFixed(0)}%`
               }
               labelLine={{ stroke: "#9ca3af" }}
             >
               {orderStatusData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip

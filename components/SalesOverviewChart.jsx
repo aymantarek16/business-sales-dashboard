@@ -22,22 +22,23 @@ const SalesOverviewChart = () => {
 
   return (
     <motion.div
-      className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-6 border border-[#1f1f1f] mx-1 md:mx-0 overflow-hidden"
+      whileHover={{ scale: 1.02 }}
+      className="bg-gradient-to-br from-[#1b152a] to-[#14101f]
+                 shadow-lg border border-[#2a2340]
+                 rounded-2xl p-5 cursor-pointer
+                 hover:shadow-[0_0_25px_-5px_rgba(139,92,246,0.6)]
+                 backdrop-blur-md"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.5 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
     >
       <h2 className="text-base md:text-lg font-medium mb-4 text-gray-100 text-center md:text-left">
         Sales Overview
       </h2>
-      <div className="h-64 md:h-80 overflow-hidden">
-        <ResponsiveContainer
-          width="100%"
-          height="100%"
-          className="focus:outline-none focus:ring-0"
-        >
+      <div className="h-64 md:h-80 overflow-hidden rounded-xl">
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={salesData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#2a2340" />
             <XAxis
               dataKey="name"
               stroke="#9ca3af"
@@ -49,12 +50,6 @@ const SalesOverviewChart = () => {
               tickCount={5}
               tick={{ fontSize: 12 }}
               width={40}
-              tooltipStyle={{
-                backgroundColor: "rgba(31, 41, 55, 0.8)",
-                borderColor: "#4b5563",
-                fontSize: "12px",
-              }}
-              itemStyle={{ color: "#e5e7eb" }}
             />
             <Line
               type="monotone"

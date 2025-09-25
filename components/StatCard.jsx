@@ -6,15 +6,21 @@ import { motion } from "framer-motion";
 const StatCard = ({ name, icon: Icon, value }) => {
   return (
     <motion.div
-      whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}
-      className="bg-[#1e1e1e] backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-[#1f1f1f] hover:bg-purple-800"
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="flex items-center gap-4 p-5 rounded-2xl 
+      bg-gradient-to-br from-[#1b152a] to-[#14101f] 
+      shadow-lg border border-[#2a2340]
+      hover:shadow-[0_0_25px_-5px_rgba(139,92,246,0.6)]
+      transition cursor-pointer"
     >
-      <div className="px-4 py-5 sm:px-6">
-        <span className="flex items-center text-sm font-medium text-gray-300">
-          <Icon size={20} className="mr-2" />
-          {name}
-        </span>
-        <p className="mt-1 text-3xl font-semibold text-white">{value}</p>
+      <div className="p-3 rounded-full bg-[#2a2540] shadow-inner">
+        <Icon className="w-6 h-6 text-violet-400" />
+      </div>
+
+      <div>
+        <p className="text-sm text-gray-400">{name}</p>
+        <h2 className="text-lg font-bold text-white">{value}</h2>
       </div>
     </motion.div>
   );
