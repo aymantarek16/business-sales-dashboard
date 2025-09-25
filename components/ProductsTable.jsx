@@ -10,7 +10,7 @@ const ProductsTable = () => {
   const [products, setProducts] = useState(productData.products);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingRow, setEditingRow] = useState(null);
-  const [confirmDelete, setConfirmDelete] = useState(null); // id of the row showing popover
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -23,10 +23,7 @@ const ProductsTable = () => {
     setProducts(filtered);
   };
 
-  const handleDelete = (id) => {
-    setConfirmDelete(id); // show popover for this row
-  };
-
+  const handleDelete = (id) => setConfirmDelete(id);
   const confirmDeleteRow = (id) => {
     setProducts(products.filter((p) => p.id !== id));
     setConfirmDelete(null);
@@ -49,10 +46,10 @@ const ProductsTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.5 }}
-      className="w-[76vw] bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-8 border border-[#1f1f1f] mx-auto mb-8 relative"
+      className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-8 border border-[#1f1f1f] mx-auto mb-8 relative w-full"
     >
       {/* Header + Search */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 md:gap-0">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 md:gap-0 w-full">
         <h2 className="text-lg md:text-xl font-semibold text-gray-100 text-center md:text-left">
           Products List
         </h2>
@@ -73,10 +70,10 @@ const ProductsTable = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto w-[73vw]">
+      <div className="overflow-x-auto w-full">
         <table className="min-w-full table-auto divide-y divide-gray-700">
           <thead className="bg-[#2a2a2a]">
-            <tr >
+            <tr>
               {[
                 "ID",
                 "Name",
@@ -88,7 +85,7 @@ const ProductsTable = () => {
               ].map((header) => (
                 <th
                   key={header}
-                  className="px-4 py-3 text-left text-sm md:text-base font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-4 py-3 text-left text-sm md:text-base font-medium text-gray-400 uppercase tracking-wider whitespace-nowrap"
                 >
                   {header}
                 </th>
@@ -105,10 +102,10 @@ const ProductsTable = () => {
                 transition={{ delay: 0.1, duration: 0.3 }}
                 className="hover:bg-gray-800 relative"
               >
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                <td className="px-4 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
                   {product.id}
                 </td>
-                <td className="px-2 py-3 mr-7 text-sm md:text-base text-gray-100 flex items-center relative top-1.5 gap-2">
+                <td className="px-2 py-3 text-xs md:text-base relative top-1 text-gray-100 flex items-center gap-2 whitespace-nowrap">
                   <Image
                     src={product.image || "/placeholder.png"}
                     alt={product.name}
@@ -116,14 +113,20 @@ const ProductsTable = () => {
                     height={40}
                     className="w-10 h-10 rounded-full object-cover"
                   />
-                  {product.name}
+                  <span
+                    className="max-w-[120px] md:max-w-xs lg:max-w-sm truncate"
+                    title={product.name} 
+                  >
+                    {product.name}
+                  </span>
                 </td>
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+
+                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
                   {product.category}
                 </td>
 
                 {/* Editable Fields */}
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                <td className="px-2 pl-7 py-3 text-xs md:text-base text-gray-100 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -138,7 +141,7 @@ const ProductsTable = () => {
                   )}
                 </td>
 
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -153,7 +156,7 @@ const ProductsTable = () => {
                   )}
                 </td>
 
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100 whitespace-nowrap">
                   {editingRow === product.id ? (
                     <input
                       type="text"
@@ -169,7 +172,7 @@ const ProductsTable = () => {
                 </td>
 
                 {/* Actions */}
-                <td className="px-4 py-3 text-sm md:text-base text-gray-100 flex gap-2 md:gap-3 relative">
+                <td className="px-4 py-3 text-sm md:text-base text-gray-100 flex gap-2 md:gap-3 relative whitespace-nowrap">
                   {editingRow === product.id ? (
                     <button
                       onClick={handleSaveClick}

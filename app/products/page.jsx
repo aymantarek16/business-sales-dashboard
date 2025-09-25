@@ -20,8 +20,8 @@ const stats = [
 
 const ProductsPage = () => {
   return (
-    <div className="flex-1 overflow-auto relative z-10 overflow-x-hidden">
-      <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
+    <div className="flex-1 overflow-auto relative z-10">
+      <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8 w-full">
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -36,9 +36,10 @@ const ProductsPage = () => {
               value={stat.value}
             />
           ))}
-
-          <ProductsTable />
         </motion.div>
+
+        {/* Table Section */}
+        <ProductsTable />
       </main>
     </div>
   );
