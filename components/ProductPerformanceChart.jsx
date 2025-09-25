@@ -25,7 +25,6 @@ const ProductPerformanceChart = () => {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 250 }}
       className="bg-gradient-to-br from-[#1b152a] to-[#14101f]
                  shadow-lg border border-[#2a2340]
                  rounded-2xl p-5 cursor-pointer
