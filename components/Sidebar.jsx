@@ -60,23 +60,40 @@ const Sidebar = () => {
       .then((data) => setSidebarItems(data.sidebarItems));
   }, []);
 
+  const [showBurger, setShowBurger] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 30) {
+        setShowBurger(false);
+      } else {
+        setShowBurger(true);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   if (!mounted) return null;
 
   return (
     <>
       {/* ====== Mobile Burger Button ====== */}
-      <div
-        className={`sm:hidden fixed top-8 left-35 ${
-          mobileOpen ? "z-400" : "z-3"
-        }`}
-      >
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-md bg-violet-600 text-white shadow-lg"
+      {showBurger && (
+        <div
+          className={`sm:hidden fixed top-8 left-35 ${
+            mobileOpen ? "z-400" : "z-3"
+          }`}
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 rounded-md bg-violet-600 text-white shadow-lg"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      )}
 
       {/* ========= Mobile Sidebar ======== */}
       <AnimatePresence>
