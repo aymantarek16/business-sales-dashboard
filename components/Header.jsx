@@ -4,8 +4,26 @@ import Image from "next/image";
 import { Bell, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+   const pathname = usePathname();
+
+  // map routes to page names
+  const titles = {
+    "/": "Dashboard",
+    "/products": "Products",
+    "/users": "Clients",
+    "/orders": "Orders",
+    "/sales": "Sales",
+    "/settings": "Settings",
+    "/messages": "Messages",
+    "/notifications": "Notifications",
+    "/help": "Help",
+  };
+
+  const pageTitle = titles[pathname] || "Page";
+
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -15,11 +33,11 @@ const Header = () => {
     { id: 3, text: "New user registered" },
   ]);
 
-  // refs علشان نحدد كل dropdown
+  // Refs for dropdown
   const notifRef = useRef(null);
   const profileRef = useRef(null);
 
-  // اغلاق الدروبدوان عند الضغط خارجهم
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -37,12 +55,12 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // حذف إشعار واحد
+  // Delete a single notification
   const deleteNotification = (id) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
-  // مسح الكل
+  // Delete all notifications
   const clearAll = () => setNotifications([]);
 
   return (
@@ -56,7 +74,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 flex items-center justify-between">
         {/* Title */}
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-100 tracking-wide">
-          Dashboard
+          {pageTitle}
         </h1>
 
         {/* Right Section */}
@@ -90,7 +108,7 @@ const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-3 w-72 bg-[#1e1b2e] border border-[#2a2340] rounded-xl shadow-lg overflow-hidden"
+                  className="absolute -right-15 sm:-right-0 mt-3 w-72 bg-[#1e1b2e] border border-[#2a2340] rounded-xl shadow-lg overflow-hidden"
                 >
                   <div className="flex items-center justify-between px-3 py-2 border-b border-[#2a2340] text-sm text-gray-300">
                     <button
