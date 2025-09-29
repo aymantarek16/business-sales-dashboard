@@ -86,7 +86,7 @@ const Sidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 h-full w-64 z-11 pt-5
+            className="fixed top-0 left-0 h-full w-50 z-11 pt-5
               bg-gradient-to-b from-[#2a1f4d]/85 via-[#4c1d95]/70 to-[#14101f]/90 
               border-r border-white/10 shadow-2xl backdrop-blur-2xl overflow-y-auto"
           >
