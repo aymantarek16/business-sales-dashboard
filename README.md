@@ -28,8 +28,6 @@ This project provides an elegant and interactive UI for managing **clients, orde
 
 ## 📸 Screenshots
 
-## 📸 Screenshots
-
 ### 📊 Dashboard  
 ![Dashboard](./public/screenshots/dashboard.png)
 
