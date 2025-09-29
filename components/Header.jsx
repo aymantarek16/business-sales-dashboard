@@ -69,7 +69,7 @@ const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="mx-4 sm:mx-6 lg:mx-8 mt-4 rounded-2xl shadow-lg border border-[#2a2340] 
-      bg-gradient-to-r from-[#1b152a] to-[#14101f] backdrop-blur-lg relative z-50"
+      bg-gradient-to-r from-[#1b152a] to-[#14101f] backdrop-blur-lg relative z-1"
     >
       <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 flex items-center justify-between">
         {/* Title */}

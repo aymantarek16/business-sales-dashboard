@@ -65,7 +65,11 @@ const Sidebar = () => {
   return (
     <>
       {/* ====== Mobile Burger Button ====== */}
-      <div className="sm:hidden fixed top-8 left-35 z-500">
+      <div
+        className={`sm:hidden fixed top-8 left-35 ${
+          mobileOpen ? "z-400" : "z-3"
+        }`}
+      >
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="p-2 rounded-md bg-violet-600 text-white shadow-lg"
@@ -82,7 +86,7 @@ const Sidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 h-full w-64 z-400 pt-5
+            className="fixed top-0 left-0 h-full w-64 z-11 pt-5
               bg-gradient-to-b from-[#2a1f4d]/85 via-[#4c1d95]/70 to-[#14101f]/90 
               border-r border-white/10 shadow-2xl backdrop-blur-2xl overflow-y-auto"
           >
@@ -92,7 +96,11 @@ const Sidebar = () => {
                 const isActive = pathname === item.href;
 
                 return (
-                  <Link key={item.name} href={item.href} onClick={() => setMobileOpen(false)}>
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                  >
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       className={`flex items-center p-3 rounded-xl transition-all duration-200 mb-2 cursor-pointer
@@ -176,7 +184,11 @@ const Sidebar = () => {
             className="flex w-full items-center justify-center py-3 cursor-pointer 
             border-t border-white/10 hover:bg-white/10 text-gray-400 hover:text-violet-300 transition-colors"
           >
-            {isSideBarOpen ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
+            {isSideBarOpen ? (
+              <ChevronLeft size={22} />
+            ) : (
+              <ChevronRight size={22} />
+            )}
           </button>
         </div>
       </motion.div>
