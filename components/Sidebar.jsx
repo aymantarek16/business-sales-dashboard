@@ -74,7 +74,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* ======== Mobile Sidebar ======= */}
+      {/* ========= Mobile Sidebar ======== */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
